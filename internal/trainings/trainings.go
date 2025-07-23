@@ -33,6 +33,8 @@ func (t *Training) Parse(datastring string) (err error) {
 		return errors.New("number of steps must be greater than 0")
 	}
 
+	t.TrainingType = parsedData[1]
+
 	t.Duration, err = time.ParseDuration(parsedData[2])
 	if err != nil {
 		return err
@@ -69,7 +71,7 @@ func (t Training) ActionInfo() (string, error) {
 	}
 
 	outputFormat := "Тип тренировки: %s\nДлительность: %0.2f ч.\nДистанция: %0.2f км.\nСкорость: %0.2f км/ч\nСожгли калорий: %0.2f\n"
-	output := fmt.Sprintf(outputFormat, t.TrainingType, t.Duration, distance, meanSpeed, spentCalories)
+	output := fmt.Sprintf(outputFormat, t.TrainingType, t.Duration.Hours(), distance, meanSpeed, spentCalories)
 
 	return output, nil
 }
